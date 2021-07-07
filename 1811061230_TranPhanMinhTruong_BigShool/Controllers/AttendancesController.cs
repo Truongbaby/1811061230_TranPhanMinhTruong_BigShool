@@ -1,4 +1,5 @@
-﻿using _1811061230_TranPhanMinhTruong_BigShool.Models;
+﻿using _1811061230_TranPhanMinhTruong_BigShool.DTOs;
+using _1811061230_TranPhanMinhTruong_BigShool.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -21,14 +22,14 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
 
         [HttpPost]
 
-        public IHttpActionResult Attend([FromBody] int courseID)
+        public IHttpActionResult Attend(AttendanceDto attendanceDto)
         {
-            //var userId = User.Identity.GetUserId();
-            //if (_dbContext.Attendances.Any(a => a.AttendeeId == userId && a.CourseId == attendanceDto.CourseId))
-            //    return BadRequest("The Attendance already exists!");
+            var userId = User.Identity.GetUserId();
+            if (_dbContext.Attendances.Any(a => a.AttendeeId == userId && a.CourseId == attendanceDto.CourseId))
+                return BadRequest("The Attendance already exists!");
             var attendance = new Attendance
             {
-                CourseId = courseID,
+                CourseId = attendanceDto.CourseId,
                 AttendeeId = User.Identity.GetUserId()
             };
 

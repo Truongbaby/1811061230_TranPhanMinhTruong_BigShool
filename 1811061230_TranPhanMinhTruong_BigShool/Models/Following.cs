@@ -1,7 +1,11 @@
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
 
-namespace _1811060740_NguyenDucThinh_BigSchool.Models
+namespace _1811061230_TranPhanMinhTruong_BigShool.Models
 {
     public class Following
     {

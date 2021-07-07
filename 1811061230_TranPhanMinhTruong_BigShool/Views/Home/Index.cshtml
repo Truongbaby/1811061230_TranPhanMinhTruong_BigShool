@@ -3,42 +3,79 @@
 @{
     ViewBag.Title = "Home Page";
 }
+<link rel="stylesheet" href="~/Content/Site.css">
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<div class="row">
+    <div class="course">
+        <ul>
+            @foreach (var course in Model)
+            {
+                <li>
+                    @*<div class=" date">
+                        <div class="month">
+                            @course.DateTime.ToString("MM")
+                        </div>
 
-<div class="course">
-    <ul>
-        @foreach (var course in Model)
-        {
-            <li>
-                <div class=" date">
-                    <div class="month">
-                        @course.DateTime.ToString("MM")
+                        <div class="day">
+                            @course.DateTime.ToString("dd")
+                        </div>
+
+
+
+                    </div>*@
+                    <div class="details">
+                        <span class="lecturer">
+                            @course.DateTime -
+                            @course.Lecturer.Name
+                        </span>
+
+
+
+
+                        <span class="category">
+                            @*@course.DateTime -*@
+                            @course.Category.Name
+                        </span>
+
+
+                        <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">
+                            Going?
+
+                        </button>
+
                     </div>
 
-                    <div class="day">
-                        @course.DateTime.ToString("dd")
-                    </div>
+
+                </li>
+            }
+        </ul>
+
+        @section scripts{
+            <script>
+                $(function () {
+                    $('.js-toggle-attendance').click(function (e) {
+                        var button = $(e.target);
+                        $.post("/api/attendances", { CourseId: button.attr("data-course-id") }).done(function () {
+                            button
+                                .removeClass("btn-default")
+                                .addClass("btn-info")
+                                .text("Going");
+                        }).fail(function () {
+                            alert("Something failed");
+                        });
+                    });
 
 
-
-                </div>
-                <div class="details">
-                    <span class="lecturer">
-                        @course.DateTime - @course.Lecturer.Name
-                    </span>
-
-                    <span class="category">
-                        @course.DateTime - @course.Lecturer.Name
-                    </span>
-
-                </div>
-
-
-            </li>
+                    //$('.js-toggle-follow').click(function (e) {
+                    //    var button = $(e.target);
+                    //    $.post("/api/followings", { FolloweeId: button.attr("data-user-id") }).done(function () {
+                    //        button
+                    //            .text("Following");
+                    //    }).fail(function () {
+                    //        alert("Something failed");
+                    //    });
+                    //});
+                });
+            </script>
         }
-    </ul>
+    </div>
