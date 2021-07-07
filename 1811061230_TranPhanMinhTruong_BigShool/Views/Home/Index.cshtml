@@ -10,13 +10,35 @@
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
-<div class="row">
+<div class="course">
     <ul>
         @foreach (var course in Model)
-            {
-                <li>
-                    @course.DateTime - @course.Lecturer.Name
-                </li>
-            }
+        {
+            <li>
+                <div class=" date">
+                    <div class="month">
+                        @course.DateTime.ToString("MM")
+                    </div>
+
+                    <div class="day">
+                        @course.DateTime.ToString("dd")
+                    </div>
+
+
+
+                </div>
+                <div class="details">
+                    <span class="lecturer">
+                        @course.DateTime - @course.Lecturer.Name
+                    </span>
+
+                    <span class="category">
+                        @course.DateTime - @course.Lecturer.Name
+                    </span>
+
+                </div>
+
+
+            </li>
+        }
     </ul>
-   

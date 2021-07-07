@@ -1,15 +1,15 @@
-﻿using System;
+﻿using _1811061230_TranPhanMinhTruong_BigShool.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using _1811060740_NguyenDucThinh_BigSchool.DTos;
-using _1811060740_NguyenDucThinh_BigSchool.Models;
-using Microsoft.AspNet.Identity;
 
-namespace _1811060740_NguyenDucThinh_BigSchool.Controllers
+namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
 {
+    [Authorize]
     public class AttendancesController : ApiController
     {
         private ApplicationDbContext _dbContext;
@@ -19,14 +19,16 @@ namespace _1811060740_NguyenDucThinh_BigSchool.Controllers
             _dbContext = new ApplicationDbContext();
         }
 
-        public IHttpActionResult Attend(AttendanceDto attendanceDto)
+        [HttpPost]
+
+        public IHttpActionResult Attend([FromBody] int courseID)
         {
-            var userId = User.Identity.GetUserId();
-            if (_dbContext.Attendances.Any(a => a.AttendeeId == userId && a.CourseId == attendanceDto.CourseId))
-                return BadRequest("The Attendance already exists!");
+            //var userId = User.Identity.GetUserId();
+            //if (_dbContext.Attendances.Any(a => a.AttendeeId == userId && a.CourseId == attendanceDto.CourseId))
+            //    return BadRequest("The Attendance already exists!");
             var attendance = new Attendance
             {
-                CourseId = attendanceDto.CourseId,
+                CourseId = courseID,
                 AttendeeId = User.Identity.GetUserId()
             };
 
