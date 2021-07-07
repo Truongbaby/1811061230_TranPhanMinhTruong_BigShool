@@ -4,18 +4,16 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
-using System.Web.Mvc;
-using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 
 namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
 {
-    public class FollowingsController : Controller
+    public class FollowingsController : ApiController
     {
-        private readonly ApplicationDbContext _dbContext;
-        // GET: Followings
-       
+
+        private ApplicationDbContext _dbContext;
 
         public FollowingsController()
         {
@@ -28,7 +26,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
             var userId = User.Identity.GetUserId();
             if (_dbContext.Followings.Any(a => a.FollowerId == userId && a.FolloweeId == followingDTO.FolloweeId))
             {
-                return BadRequest
+                return BadRequest("The Attendance already exits");
             }
 
             var following = new Following
@@ -42,5 +40,4 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
 
             return Ok();
         }
-    }
 }

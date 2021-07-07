@@ -1,4 +1,4 @@
-﻿@model IEnumerable<_1811061230_TranPhanMinhTruong_BigShool.Models.Course>
+﻿@model _1811061230_TranPhanMinhTruong_BigShool.ViewModels.CourseViewModel
 
 @{
     ViewBag.Title = "Home Page";
@@ -8,7 +8,7 @@
 <div class="row">
     <div class="course">
         <ul>
-            @foreach (var course in Model)
+            @foreach (var course in Model.UpcommingCourses)
             {
                 <li>
                     @*<div class=" date">
@@ -27,21 +27,29 @@
                         <span class="lecturer">
                             @course.DateTime -
                             @course.Lecturer.Name
+                            @if (Model.ShowAction)
+                            {
+                                <button class="btn btn-default btn-sm js-toggle-follow" data-user-id="@course.LecturerId">Follow</button>
+                            }
+
+
                         </span>
-
-
-
 
                         <span class="category">
                             @*@course.DateTime -*@
                             @course.Category.Name
+
+
                         </span>
+                        @if (Model.ShowAction)
+                        {
+                    <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance"> Going?</button>
+                        }
 
 
-                        <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">
-                            Going?
 
-                        </button>
+
+                  
 
                     </div>
 
@@ -66,15 +74,15 @@
                     });
 
 
-                    //$('.js-toggle-follow').click(function (e) {
-                    //    var button = $(e.target);
-                    //    $.post("/api/followings", { FolloweeId: button.attr("data-user-id") }).done(function () {
-                    //        button
-                    //            .text("Following");
-                    //    }).fail(function () {
-                    //        alert("Something failed");
-                    //    });
-                    //});
+                    $('.js-toggle-follow').click(function (e) {
+                        var button = $(e.target);
+                        $.post("/api/followings", { FolloweeId: button.attr("data-user-id") }).done(function () {
+                            button
+                                .text("Following");
+                        }).fail(function () {
+                            alert("Something failed");
+                        });
+                    });
                 });
             </script>
         }

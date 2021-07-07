@@ -10,6 +10,10 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.ViewModels
     public class CourseViewModel
     {
 
+        public IEnumerable<Course> UpcommingCourses { get; set; }
+        public bool ShowAction { get; set; }
+
+
         [Required]
         public string Place { get; set; }
         [Required]
