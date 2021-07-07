@@ -9,21 +9,32 @@ using System.Web.Mvc;
 
 namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
 {
-    
+
     public class CoursesController : Controller
-    { 
+    {
         private readonly ApplicationDbContext _dbContext;
-    public CoursesController()
+        public CoursesController()
         {
             _dbContext = new ApplicationDbContext();
         }
+        
+        [Authorize]
+        public ActionResult Create()
+        {
+            var viewModel = new CourseViewModel
+            {
+                Categories = _dbContext.Categories.ToList()
+            };
+            return View(viewModel);
+        }
+
         // GET: Courses
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create (CourseViewModel viewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 viewModel.Categories = _dbContext.Categories.ToList();
                 return View("Create", viewModel);
@@ -41,19 +52,8 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-        [Authorize]
-        [HttpPost]
+       
 
-        public ActionResult Create()
-        {
-            var viewModel = new CourseViewModel
-            {
-                Categories = _dbContext.Categories.ToList()
-            };
-            return View(viewModel);
-
-            
-        }
 
     }
 }

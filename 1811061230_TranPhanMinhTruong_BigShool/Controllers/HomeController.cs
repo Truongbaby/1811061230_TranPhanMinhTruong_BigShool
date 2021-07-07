@@ -25,32 +25,33 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
                .Include(c => c.Category)
                .Where(c => c.DateTime > DateTime.Now);
             var userId = User.Identity.GetUserId();
+            // sai tiếp thằng attenda
 
-            var viewModel = new CourseViewModel
+            var viewModel = new CoursesViewModel
             {
                 UpcommingCourses = upcommingCourses,
                 ShowAction = User.Identity.IsAuthenticated,
-                //Followings = _dbContext.Followings.Where(f => userId != null && f.FolloweeId == userId).ToList(),
-                //Attendances = _dbContext.Attendances.Include(a => a.Course).ToList()
+                Followings = _dbContext.Followings.Where(f => userId != null && f.FolloweeId == userId).ToList(),
+                Attendances = _dbContext.Attendances.Include(a => a.Course).ToList()
             };
 
             return View(viewModel);
         }
-    
 
-        //public ActionResult About()
-        //{
-        //    ViewBag.Message = "Your application description page.";
 
-        //    return View();
-        //}
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
 
-        //public ActionResult Contact()
-        //{
-        //    ViewBag.Message = "Your contact page.";
+            return View();
+        }
 
-        //    return View();
-        //}
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
 
     }
 }
