@@ -12,5 +12,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.ViewModels
         public IEnumerable<Following> Followings { get; set; }
         public IEnumerable<Attendance> Attendances { get; set; }
         public bool ShowAction { get; set; }
+
+
     }
 }

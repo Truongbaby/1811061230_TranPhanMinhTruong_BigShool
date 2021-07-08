@@ -30,5 +30,8 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.ViewModels
         {
             get { return (Id != 0) ? "Update" : "Create"; }
         }
+
+
     }
+
 }

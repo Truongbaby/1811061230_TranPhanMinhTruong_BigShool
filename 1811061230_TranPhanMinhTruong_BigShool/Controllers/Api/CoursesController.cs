@@ -1,17 +1,17 @@
-﻿using System;
+﻿using _1811061230_TranPhanMinhTruong_BigShool.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using _1811060740_NguyenDucThinh_BigSchool.Models;
-using Microsoft.AspNet.Identity;
 
-namespace _1811060740_NguyenDucThinh_BigSchool.Controllers.Api
+namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers.Api
 {
     public class CoursesController : ApiController
     {
-        public ApplicationDbContext _dbContext { get; set; }
+        ApplicationDbContext _dbContext { get; set; }
 
         public CoursesController()
         {
@@ -22,8 +22,8 @@ namespace _1811060740_NguyenDucThinh_BigSchool.Controllers.Api
         public IHttpActionResult Cancel(int id)
         {
             var userId = User.Identity.GetUserId();
-
             var course = _dbContext.Courses.Single(c => c.Id == id && c.LecturerId == userId);
+
 
             if (course.IsCanceled)
             {
@@ -31,9 +31,11 @@ namespace _1811060740_NguyenDucThinh_BigSchool.Controllers.Api
             }
 
             course.IsCanceled = true;
+
             _dbContext.SaveChanges();
 
             return Ok();
+
         }
     }
 }
