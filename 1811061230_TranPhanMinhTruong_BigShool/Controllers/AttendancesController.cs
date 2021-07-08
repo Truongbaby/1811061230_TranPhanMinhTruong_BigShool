@@ -21,7 +21,6 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
         }
 
         [HttpPost]
-
         public IHttpActionResult Attend(AttendanceDto attendanceDto)
         {
             var userId = User.Identity.GetUserId();
