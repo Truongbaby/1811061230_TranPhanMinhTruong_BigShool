@@ -34,7 +34,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
 
             _dbContext.Attendances.Add(attendance);
             _dbContext.SaveChanges();
-            return Ok();
+            return Ok();    
         }
     }
 }

@@ -44,8 +44,37 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
                .Include(x => x.Followee)
                .Include(x => x.Follower).SingleOrDefault();
 
-           
+            var followingNotification = new FollowingNotification()
+            {
+                Id = 0,
+                Logger = following.Follower.Name + " following " + following.Followee.Name
+            };
+            _dbContext.FollowingNotifications.Add(followingNotification);
+            _dbContext.SaveChanges();
 
+
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public IHttpActionResult UnFollow(string followeeId, string followerId)
+        {
+            var follow = _dbContext.Followings
+                .Where(x => x.FolloweeId == followeeId && x.FollowerId == followerId)
+                .Include(x => x.Followee)
+                .Include(x => x.Follower).SingleOrDefault();
+
+            var followingNotification = new FollowingNotification()
+            {
+                Id = 0,
+                Logger = follow.Follower.Name + " unfollow " + follow.Followee.Name
+            };
+
+            _dbContext.FollowingNotifications.Add(followingNotification);
+
+            _dbContext.Followings.Remove(follow);
+            _dbContext.SaveChanges();
             return Ok();
         }
 

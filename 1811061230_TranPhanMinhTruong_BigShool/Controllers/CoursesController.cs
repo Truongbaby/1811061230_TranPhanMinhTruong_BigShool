@@ -4,7 +4,9 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,6 +19,10 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
         public CoursesController()
         {
             _dbContext = new ApplicationDbContext();
+            CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+            culture.DateTimeFormat.ShortDatePattern = "dd-MMM-yyyy";
+            culture.DateTimeFormat.LongTimePattern = "";
+            Thread.CurrentThread.CurrentCulture = culture;
         }
         
         [Authorize]
@@ -27,19 +33,19 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
                 Categories = _dbContext.Categories.ToList(),
                 Heading = "Add Courses"
             };
-            return View("CourseForm",viewModel);
+            return View("Create", viewModel);
         }
 
         // GET: Courses
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create (CourseViewModel viewModel)
+        public ActionResult Create(CourseViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 viewModel.Categories = _dbContext.Categories.ToList();
-                return View("CourseForm", viewModel);
+                return View("Create", viewModel);
             }
             var course = new Course
             {
@@ -54,6 +60,53 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+
+        public ActionResult Following()
+        {
+            var userId = User.Identity.GetUserId();
+            var followings = _dbContext.Followings
+                .Where(a => a.FolloweeId == userId)
+                .Select(a => a.Follower)
+                .ToList();
+
+            var viewModel = new FollowingViewModel
+            {
+                Followings = followings,
+                ShowAction = User.Identity.IsAuthenticated
+            };
+
+            return View(viewModel);
+        }
+
+        public ActionResult FollowingMeList()
+        {
+            var userId = User.Identity.GetUserId();
+            var followings = _dbContext.Followings
+                .Where(a => a.FollowerId == userId)
+                .Select(a => a.Followee)
+                .ToList();
+
+            var viewModel = new FollowingViewModel
+            {
+                Followings = followings,
+                ShowAction = User.Identity.IsAuthenticated
+            };
+
+            return View(viewModel);
+        }
+
+        public ActionResult FollowNotification()
+        {
+            var viewModel = new FollowNotificationViewModel
+            {
+                Notifications = _dbContext.FollowingNotifications.ToList()
+            };
+
+            return View(viewModel);
+        }
+
+
+    
         [Authorize]
         public ActionResult Attending()
         {
@@ -63,7 +116,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
                 .Select(a => a.Course)
                 .Include(l => l.Lecturer)
                 .Include(l => l.Category)
-                //.Where(a => a.IsCanceled == false)
+                .Where(a => a.IsCanceled == false)
                 .ToList();
 
             var viewModel = new CoursesViewModel
@@ -104,7 +157,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
                 Id = course.Id
             };
 
-            return View("CourseForm", viewModel);
+            return View("Create", viewModel);
 
         }
 
@@ -116,7 +169,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Categories = _dbContext.Categories.ToList();
-                return View("CourseForm", viewModel);
+                return View("Create", viewModel);
             }
 
             var userId = User.Identity.GetUserId();
