@@ -39,18 +39,18 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
             _dbContext.Followings.Add(following);
             _dbContext.SaveChanges();
 
-            following = _dbContext.Followings
-               .Where(x => x.FolloweeId == followingDTO.FolloweeId && x.FollowerId == userId)
-               .Include(x => x.Followee)
-               .Include(x => x.Follower).SingleOrDefault();
+            //following = _dbContext.Followings
+            //   .Where(x => x.FolloweeId == followingDTO.FolloweeId && x.FollowerId == userId)
+            //   .Include(x => x.Followee)
+            //   .Include(x => x.Follower).SingleOrDefault();
 
-            var followingNotification = new FollowingNotification()
-            {
-                Id = 0,
-                Logger = following.Follower.Name + " following " + following.Followee.Name
-            };
-            _dbContext.FollowingNotifications.Add(followingNotification);
-            _dbContext.SaveChanges();
+            //var followingNotification = new FollowingNotification()
+            //{
+            //    Id = 0,
+            //    Logger = following.Follower.Name + " following " + following.Followee.Name
+            //};
+            //_dbContext.FollowingNotifications.Add(followingNotification);
+            //_dbContext.SaveChanges();
 
 
 
@@ -71,7 +71,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
                 Logger = follow.Follower.Name + " unfollow " + follow.Followee.Name
             };
 
-            _dbContext.FollowingNotifications.Add(followingNotification);
+            //_dbContext.FollowingNotifications.Add(followingNotification);
 
             _dbContext.Followings.Remove(follow);
             _dbContext.SaveChanges();
