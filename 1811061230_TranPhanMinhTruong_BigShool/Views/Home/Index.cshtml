@@ -1,11 +1,15 @@
 ﻿@model _1811061230_TranPhanMinhTruong_BigShool.ViewModels.CoursesViewModel
 @using Microsoft.AspNet.Identity;
+@using _1811061230_TranPhanMinhTruong_BigShool.Models
+
+
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
 <div class="row">
     <ul class="course">
         @foreach (var course in Model.UpcommingCourses)
@@ -24,13 +28,13 @@
                         @course.Lecturer.Name
                         @if (Model.ShowAction)
                         {
-                            if (Model.Followings.Any(x => x.FolloweeId == course.Lecturer.Id))
+                            if (Model.Followings.Any(x => x.FollowerId == @User.Identity.GetUserId() && x.FolloweeId == course.Lecturer.Id))
                             {
                                 <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-follow">Following</button>
                             }
                             else
                             {
-                                <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-follow">Follow</button>
+                                <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-attendance">Follow</button>
                             }
 
                         }
@@ -39,7 +43,7 @@
                         @course.Category.Name
                         @if (Model.ShowAction)
                         {
-                            if (Model.Attendances.Any(x => x.CourseId == course.Id))
+                            if (Model.Attendances.Any(x => x.CourseId == course.Id && x.AttendeeId == @User.Identity.GetUserId()))
                             {
                                 <button data-course-id="@course.Id" class="btn btn-sm btn-info">Going</button>
                             }
@@ -48,6 +52,7 @@
                                 <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
                             }
                         }
+
                     </span>
                 </div>
 
@@ -55,32 +60,33 @@
         }
 
     </ul>
+
+
+    @section scripts{
+        <script>
+            $(function () {
+                $('.js-toggle-attendance').click(function (e) {
+                    var button = $(e.target);
+                    $.post("/api/attendances", { CourseId: button.attr("data-course-id") }).done(function () {
+                        button
+                            .removeClass("btn-default")
+                            .addClass("btn-info")
+                            .text("Going");
+                    }).fail(function () {
+                        alert("Something failed");
+                    });
+                });
+
+                $('.js-toggle-follow').click(function (e) {
+                    var button = $(e.target);
+                    $.post("/api/followings", { FolloweeId: button.attr("data-user-id") }).done(function () {
+                        button
+                            .text("Following");
+                    }).fail(function () {
+                        alert("Something failed");
+                    });
+                });
+            });
+        </script>
+    }
 </div>
-
-@section scripts{
-    <script>
-        $(function () {
-            $('.js-toggle-attendance').click(function (e) {
-                var button = $(e.target);
-                $.post("/api/attendances", { CourseId: button.attr("data-course-id") }).done(function () {
-                    button
-                        .removeClass("btn-default")
-                        .addClass("btn-info")
-                        .text("Going");
-                }).fail(function () {
-                    alert("Something failed");
-                });
-            });
-
-            $('.js-toggle-follow').click(function (e) {
-                var button = $(e.target);
-                $.post("/api/followings", { FolloweeId: button.attr("data-user-id") }).done(function () {
-                    button
-                        .text("Following");
-                }).fail(function () {
-                    alert("Something failed");
-                });
-            });
-        });
-    </script>
-}

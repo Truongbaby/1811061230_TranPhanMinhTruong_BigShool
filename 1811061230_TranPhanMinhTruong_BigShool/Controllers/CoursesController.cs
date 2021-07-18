@@ -78,32 +78,32 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
             return View(viewModel);
         }
 
-        public ActionResult FollowingMeList()
-        {
-            var userId = User.Identity.GetUserId();
-            var followings = _dbContext.Followings
-                .Where(a => a.FollowerId == userId)
-                .Select(a => a.Followee)
-                .ToList();
+        //public ActionResult FollowingMeList()
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    var followings = _dbContext.Followings
+        //        .Where(a => a.FollowerId == userId)
+        //        .Select(a => a.Followee)
+        //        .ToList();
 
-            var viewModel = new FollowingViewModel
-            {
-                Followings = followings,
-                ShowAction = User.Identity.IsAuthenticated
-            };
+        //    var viewModel = new FollowingViewModel
+        //    {
+        //        Followings = followings,
+        //        ShowAction = User.Identity.IsAuthenticated
+        //    };
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
-        public ActionResult FollowNotification()
-        {
-            var viewModel = new FollowNotificationViewModel
-            {
-                Notifications = _dbContext.FollowingNotifications.ToList()
-            };
+        //public ActionResult FollowNotification()
+        //{
+        //    var viewModel = new FollowNotificationViewModel
+        //    {
+        //        Notifications = _dbContext.FollowingNotifications.ToList()
+        //    };
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
 
     

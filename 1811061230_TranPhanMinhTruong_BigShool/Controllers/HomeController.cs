@@ -23,7 +23,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
             var upcommingCourses = _dbContext.Courses
                .Include(c => c.Lecturer)
                .Include(c => c.Category)
-               .Where(c => c.DateTime > DateTime.Now);
+               .Where(c => c.DateTime > DateTime.Now && c.IsCanceled == false   );
             var userId = User.Identity.GetUserId();
             // sai tiếp thằng attenda
 
@@ -37,6 +37,10 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
 
             return View(viewModel);
         }
+
+
+
+
 
 
         public ActionResult About()
