@@ -22,6 +22,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
 
         [HttpPost]
         public IHttpActionResult Attend(AttendanceDto attendanceDto)
+        //public IHttpActionResult Attend([FromBody] int courseId)
         {
             var userId = User.Identity.GetUserId();
             if (_dbContext.Attendances.Any(a => a.AttendeeId == userId && a.CourseId == attendanceDto.CourseId))
@@ -29,7 +30,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
             var attendance = new Attendance
             {
                 CourseId = attendanceDto.CourseId,
-                AttendeeId = User.Identity.GetUserId()
+                AttendeeId = userId
             };
 
             _dbContext.Attendances.Add(attendance);
