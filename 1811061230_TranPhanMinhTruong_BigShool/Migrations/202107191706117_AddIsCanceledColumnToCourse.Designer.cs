@@ -13,7 +13,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202107081519304_AddIsCanceledColumnToCourse"; }
+            get { return "202107191706117_AddIsCanceledColumnToCourse"; }
         }
         
         string IMigrationMetadata.Source

@@ -7,12 +7,10 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.Courses", "IsCanceled", c => c.Boolean(nullable: false));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Courses", "IsCanceled");
         }
     }
 }
