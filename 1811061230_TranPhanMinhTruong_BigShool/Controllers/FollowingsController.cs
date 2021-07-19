@@ -14,7 +14,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
     public class FollowingsController : ApiController
     {
 
-        private ApplicationDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
         public FollowingsController()
         {
@@ -25,7 +25,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
         public IHttpActionResult Follow(FollowingDto followingDTO)
         {
             var userId = User.Identity.GetUserId();
-            if (_dbContext.Followings.Any(a => a.FollowerId == userId && a.FolloweeId == followingDTO.FolloweeId))
+            if (_dbContext.Followings.Any(f => f.FollowerId == userId && f.FolloweeId == followingDTO.FolloweeId))
             {
                 return BadRequest("The Attendance already exits");
             }
