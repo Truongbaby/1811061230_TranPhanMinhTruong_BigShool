@@ -26,20 +26,20 @@
                 <div class="details">
                     <span class="lecturer">
                         @course.Lecturer.Name
-                        <button  class="btn btn-default btn-sm js-toggle-follow " data-user-id="@course.LecturerId">Follow </button>
+                        @*<button  class="btn btn-default btn-sm js-toggle-follow " data-user-id="@course.LecturerId">Follow </button>*@
 
-                        @*@if (Model.ShowAction)
+                        @if (Model.ShowAction)
                         {
                             if (Model.Followings.Any(x => x.FollowerId == @User.Identity.GetUserId() && x.FolloweeId == course.Lecturer.Id))
                             {
-                                <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-follow">Following</button>
+                                <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm btn-info">Following</button>
                             }
                             else
                             {
-                                <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-attendance">Follow</button>
+                                <button data-user-id="@course.LecturerId" class="btn btn-default btn-sm  js-toggle-follow">Follow</button>
                             }
 
-                        }*@
+                        }
                     </span>
                     <span class="category">
                         @course.Category.Name

@@ -26,11 +26,8 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
         {
             var userId = User.Identity.GetUserId();
             if (_dbContext.Followings.Any(f => f.FollowerId == userId && f.FolloweeId == followingDTO.FolloweeId))
-            {
-                return BadRequest("The Attendance already exits");
-            }
-
-            var following = new Following
+             return BadRequest("The Attendance already exits");
+             var following = new Following
             {
                 FollowerId = userId,
                 FolloweeId = followingDTO.FolloweeId
