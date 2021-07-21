@@ -14,8 +14,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Migrations
 
         protected override void Seed(_1811061230_TranPhanMinhTruong_BigShool.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
+            //  This method will be called after migrating to the latest versio
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
         }
