@@ -27,6 +27,7 @@ namespace _1811061230_TranPhanMinhTruong_BigShool.Controllers
             var userId = User.Identity.GetUserId();
             // sai tiếp thằng attenda
 
+
             var viewModel = new CoursesViewModel
             {
                 UpcommingCourses = upcommingCourses,
